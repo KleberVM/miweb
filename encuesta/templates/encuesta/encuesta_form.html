@@ -6,18 +6,30 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-10">
+        <!-- Barra de Progreso -->
+        <div class="progress-container">
+            <div class="progress-bar-custom">
+                <div class="progress-fill" id="progressBar">0%</div>
+            </div>
+            <div class="progress-text" id="progressText"><span class="material-icons">assignment</span> Completa la encuesta: 0 de 6 secciones</div>
+        </div>
+
         <div class="card shadow-lg mb-5">
             <div class="card-header bg-primary text-white text-center">
-                <h2>Encuesta Electoral</h2>
+                <h2><span class="material-icons" style="font-size: 32px; vertical-align: middle;">poll</span> Encuesta Electoral 2025</h2>
             </div>
             <div class="card-body">
-                <form method="post" class="needs-validation" novalidate>
+                <form method="post" class="needs-validation" novalidate id="surveyForm">
                     {% csrf_token %}
                     
                     <!-- Sección 1: Datos Demográficos y Socioeconómicos -->
-                    <div class="card mb-4">
+                    <div class="card mb-4 section-card" data-section="1">
                         <div class="card-header bg-secondary text-white">
-                            <h3>Sección 1: Datos Demográficos y Socioeconómicos</h3>
+                            <h3>
+                                <span class="section-icon material-icons">person</span>
+                                <span class="typewriter-text">Sección 1: Datos Demográficos y Socioeconómicos</span>
+                            </h3>
+                            <p class="text-white-50 mb-0 mt-2" style="font-size: 0.9rem;">Información básica sobre tu perfil personal, educativo y económico</p>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
@@ -91,36 +103,40 @@
                     </div>
                     
                     <!-- Sección 2: Intención de voto y alineamiento ideológico -->
-                    <div class="card mb-4">
+                    <div class="card mb-4 section-card" data-section="2">
                         <div class="card-header bg-secondary text-white">
-                            <h3>Sección 2: Intención de voto y alineamiento ideológico</h3>
+                            <h3>
+                                <span class="section-icon material-icons">how_to_vote</span>
+                                <span class="typewriter-text">Sección 2: Intención de Voto y Alineamiento Ideológico</span>
+                            </h3>
+                            <p class="text-white-50 mb-0 mt-2" style="font-size: 0.9rem;">Tu preferencia electoral y posición política actual</p>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="id_intencion_voto" class="form-label">¿Por quién votaría si las elecciones fueran hoy?</label>
+                                    <label for="id_intencion_voto" class="form-label">Si las elecciones presidenciales fueran hoy, ¿por cuál candidato votaría?</label>
                                     {{ form.intencion_voto|add_class:"form-select" }}
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="id_firmeza_voto" class="form-label">¿Qué tan firme es su decisión? (1-5)</label>
+                                    <label for="id_firmeza_voto" class="form-label">¿Qué tan seguro está de su decisión de voto? (1 = Nada seguro, 5 = Totalmente seguro)</label>
                                     {{ form.firmeza_voto|add_class:"form-select" }}
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="id_alineamiento_ideologico" class="form-label">¿Con qué posición ideológica se identifica más?</label>
+                                    <label for="id_alineamiento_ideologico" class="form-label">En el espectro político, ¿con qué posición se identifica más?</label>
                                     {{ form.alineamiento_ideologico|add_class:"form-select" }}
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="id_influencia_entorno" class="form-label">¿Qué tanto influye la opinión de su familia o amigos en su decisión de voto?(1-5)</label>
+                                    <label for="id_influencia_entorno" class="form-label">¿Cuánto influye la opinión de su familia o amigos en su decisión de voto? (1 = Nada, 5 = Mucho)</label>
                                     {{ form.influencia_entorno|add_class:"form-select" }}
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
                                 <div class="col-md-12">
-                                    <label for="id_motivacion_voto" class="form-label">¿Cuál es su principal motivación para votar?</label>
+                                    <label for="id_motivacion_voto" class="form-label">¿Cuál es la razón principal que lo motiva a participar en las elecciones?</label>
                                     {{ form.motivacion_voto|add_class:"form-select" }}
                                 </div>
                             </div>
@@ -128,10 +144,14 @@
                     </div>
                     
                     <!-- Sección 3: Factores de decisión -->
-                    <div class="card mb-4">
+                    <div class="card mb-4 section-card" data-section="3">
                         <div class="card-header bg-secondary text-white">
-                            <h3>Sección 3: Factores de decisión</h3>
-                            <p class="text-white-50 mb-0">Indique la importancia de cada factor en su decisión de voto (1-5)</p>
+                            <h3>
+                                <span class="section-icon material-icons">balance</span>
+                                <span class="typewriter-text">Sección 3: Factores de Decisión</span>
+                            </h3>
+                            <p class="text-white-50 mb-0 mt-2" style="font-size: 0.9rem;">Temas y políticas que influyen en tu elección de candidato</p>
+                            <p class="text-white-50 mb-0 mt-1" style="font-size: 0.85rem;">Califique la importancia de cada factor (1 = Nada importante, 5 = Muy importante)</p>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
@@ -208,9 +228,13 @@
                     </div>
                     
                     <!-- Sección 4: Percepción de candidatos y atributos -->
-                    <div class="card mb-4">
+                    <div class="card mb-4 section-card" data-section="4">
                         <div class="card-header bg-secondary text-white">
-                            <h3>Sección 4: Percepción de candidatos y atributos</h3>
+                            <h3>
+                                <span class="section-icon material-icons">groups</span>
+                                <span class="typewriter-text">Sección 4: Percepción de Candidatos y Atributos</span>
+                            </h3>
+                            <p class="text-white-50 mb-0 mt-2" style="font-size: 0.9rem;">Evalúa las cualidades y características de cada candidato</p>
                         </div>
                         <div class="card-body">
                             <h4 class="mb-3">Rodrigo Paz Pereira (1-5)</h4>
@@ -286,7 +310,7 @@
                             
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="id_conocimiento_economico" class="form-label">¿ Es importate que los candidatos sepan de economia ?</label>
+                                    <label for="id_conocimiento_economico" class="form-label">¿ Es importante que los candidatos sepan de economía ?</label>
                                     {{ form.conocimiento_economico|add_class:"form-select" }}
                                 </div>
                                 <div class="col-md-6">
@@ -305,9 +329,13 @@
                     </div>
                     
                     <!-- Sección 5: Impacto emocional y percepción de futuro -->
-                    <div class="card mb-4">
+                    <div class="card mb-4 section-card" data-section="5">
                         <div class="card-header bg-secondary text-white">
-                            <h3>Sección 5: Impacto emocional y percepción de futuro</h3>
+                            <h3>
+                                <span class="section-icon material-icons">psychology</span>
+                                <span class="typewriter-text">Sección 5: Impacto Emocional y Percepción de Futuro</span>
+                            </h3>
+                            <p class="text-white-50 mb-0 mt-2" style="font-size: 0.9rem;">Tus sentimientos y expectativas sobre el proceso electoral</p>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
@@ -331,9 +359,13 @@
                     </div>
                     
                     <!-- Sección 6: Escenarios hipotéticos de simulación -->
-                    <div class="card mb-4">
+                    <div class="card mb-4 section-card" data-section="6">
                         <div class="card-header bg-secondary text-white">
-                            <h3>Sección 6: Escenarios hipotéticos</h3>
+                            <h3>
+                                <span class="section-icon material-icons">lightbulb</span>
+                                <span class="typewriter-text">Sección 6: Escenarios Hipotéticos</span>
+                            </h3>
+                            <p class="text-white-50 mb-0 mt-2" style="font-size: 0.9rem;">Situaciones posibles que podrían influir en tu decisión de voto</p>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
@@ -380,6 +412,153 @@
         })
     })()
     
-    // No longer needed as we're using select dropdowns instead of range inputs
+    // ==========================================
+    // BARRA DE PROGRESO DINÁMICA
+    // ==========================================
+    const form = document.getElementById('surveyForm');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const sections = document.querySelectorAll('.section-card');
+    const totalSections = sections.length;
+    
+    // Función para calcular el progreso de una sección
+    function getSectionProgress(section) {
+        const inputs = section.querySelectorAll('input, select, textarea');
+        let filled = 0;
+        let total = inputs.length;
+        
+        inputs.forEach(input => {
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                // Para checkboxes y radios, verificar si alguno del grupo está marcado
+                const name = input.name;
+                const checked = section.querySelector(`input[name="${name}"]:checked`);
+                if (checked && input === checked) {
+                    filled++;
+                }
+            } else if (input.value && input.value.trim() !== '') {
+                filled++;
+            }
+        });
+        
+        return total > 0 ? (filled / total) : 0;
+    }
+    
+    // Variable para rastrear progreso anterior
+    let previousProgress = 0;
+    let previousCompletedSections = 0;
+    
+    // Función para actualizar la barra de progreso
+    function updateProgress() {
+        let completedSections = 0;
+        let totalProgress = 0;
+        
+        sections.forEach(section => {
+            const sectionProgress = getSectionProgress(section);
+            totalProgress += sectionProgress;
+            
+            // Marcar sección como completada si tiene más del 80% lleno
+            if (sectionProgress >= 0.8) {
+                completedSections++;
+                section.classList.add('in-view');
+            } else {
+                section.classList.remove('in-view');
+            }
+        });
+        
+        const overallProgress = (totalProgress / totalSections) * 100;
+        
+        // Añadir efecto de pulso si el progreso aumentó
+        if (overallProgress > previousProgress) {
+            progressBar.classList.add('pulse');
+            setTimeout(() => {
+                progressBar.classList.remove('pulse');
+            }, 500);
+        }
+        
+        // Actualizar valores
+        progressBar.style.width = overallProgress + '%';
+        progressBar.textContent = Math.round(overallProgress) + '%';
+        
+        // Actualizar texto con icono animado
+        const icon = '<span class="material-icons">assignment</span>';
+        if (completedSections === totalSections) {
+            progressText.innerHTML = `${icon} ¡Encuesta completada! 🎉 ${completedSections} de ${totalSections} secciones`;
+        } else {
+            progressText.innerHTML = `${icon} Completa la encuesta: ${completedSections} de ${totalSections} secciones`;
+        }
+        
+        // Cambiar color según progreso con transición suave
+        if (overallProgress < 33) {
+            progressBar.style.background = 'linear-gradient(90deg, #dc143c 0%, #ff1744 100%)';
+        } else if (overallProgress < 66) {
+            progressBar.style.background = 'linear-gradient(90deg, #003d5c 0%, #005580 100%)';
+        } else if (overallProgress < 100) {
+            progressBar.style.background = 'linear-gradient(90deg, #005580 0%, #28a745 100%)';
+        } else {
+            progressBar.style.background = 'linear-gradient(90deg, #28a745 0%, #20c997 100%)';
+        }
+        
+        // Actualizar variables de seguimiento
+        previousProgress = overallProgress;
+        previousCompletedSections = completedSections;
+    }
+    
+    // Escuchar cambios en todos los inputs
+    form.addEventListener('change', updateProgress);
+    form.addEventListener('input', updateProgress);
+    
+    // Actualizar al cargar la página
+    updateProgress();
+    
+    // ==========================================
+    // ANIMACIÓN DE MÁQUINA DE ESCRIBIR
+    // ==========================================
+    const typewriterElements = document.querySelectorAll('.typewriter-text');
+    
+    // Resetear animaciones al cargar
+    typewriterElements.forEach(element => {
+        element.style.animation = 'none';
+        element.style.borderRight = 'none';
+    });
+    
+    // Configurar Intersection Observer para animar cuando sea visible
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '-50px'
+    };
+    
+    const typewriterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('typed')) {
+                // Iniciar animación
+                entry.target.style.borderRight = '3px solid #dc143c';
+                entry.target.style.animation = 'typing 2s steps(40, end), blink 0.75s step-end infinite';
+                
+                // Después de la animación, quitar el borde parpadeante
+                setTimeout(() => {
+                    entry.target.classList.add('typed');
+                    entry.target.style.borderRight = 'none';
+                    entry.target.style.animation = 'none';
+                }, 2100);
+            }
+        });
+    }, observerOptions);
+    
+    // Observar cada elemento de máquina de escribir
+    typewriterElements.forEach(element => {
+        typewriterObserver.observe(element);
+    });
+    
+    // ==========================================
+    // SCROLL SUAVE A SECCIONES
+    // ==========================================
+    sections.forEach((section, index) => {
+        section.addEventListener('click', function(e) {
+            // Solo si se hace clic en el header
+            if (e.target.closest('.card-header')) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
 </script>
 {% endblock %}

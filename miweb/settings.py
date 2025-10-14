@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['encuesta.up.railway.app']
 
+#encuesta.up.railway.app
+CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app']
 
 # Application definition
 
