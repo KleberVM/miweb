@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from .models import Encuesta
 from django import forms
 import pandas as pd
+import datetime
 from django.http import HttpResponse
 import openpyxl
 from openpyxl.styles import Font, Alignment, PatternFill
@@ -80,7 +81,11 @@ class DownloadExcelView(View):
             # Get all fields from the model
             for field in Encuesta._meta.get_fields():
                 if field.name != 'id':
-                    encuesta_dict[field.verbose_name or field.name] = getattr(encuesta, field.name)
+                    value = getattr(encuesta, field.name)
+                    # Convert datetime with timezone to naive datetime
+                    if isinstance(value, datetime.datetime) and value.tzinfo is not None:
+                        value = value.replace(tzinfo=None)
+                    encuesta_dict[field.verbose_name or field.name] = value
             data.append(encuesta_dict)
         
         # Create DataFrame
