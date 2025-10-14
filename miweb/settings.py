@@ -74,15 +74,16 @@ WSGI_APPLICATION = 'miweb.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+#mysql://root:ZchiTHLQBoEbgBCwJGQHMbYIXlYFUWID@crossover.proxy.rlwy.net:32845/railway
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'encuesta',
+        'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',  # o la IP de tu servidor MySQL
-        'PORT': '3306',
+        'PASSWORD': 'ZchiTHLQBoEbgBCwJGQHMbYIXlYFUWID',
+        'HOST': 'crossover.proxy.rlwy.net',  # o la IP de tu servidor MySQL
+        'PORT': '32845',
     }
 }
 
