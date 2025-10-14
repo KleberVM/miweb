@@ -11,4 +11,5 @@ urlpatterns = [
     path('excel/download/', views.DownloadExcelView.as_view(), name='download_excel'),
     path('subir/', views.ExcelUploadView.as_view(), name='excel_upload'),
     path('subir/procesar/', views.ProcessExcelUploadView.as_view(), name='process_excel_upload'),
+    path('borrar-todo/', views.DeleteAllEncuestasView.as_view(), name='delete_all_encuestas'),
 ]

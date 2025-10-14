@@ -319,3 +319,22 @@ class ProcessExcelUploadView(View):
             return render(request, 'encuesta/excel_upload.html', {
                 'error': f'Error al procesar el archivo: {str(e)}'
             })
+
+@method_decorator(staff_member_required, name='dispatch')
+class DeleteAllEncuestasView(View):
+    def post(self, request):
+        try:
+            # Contar cuántas encuestas hay antes de borrar
+            count = Encuesta.objects.count()
+            
+            # Borrar todas las encuestas
+            Encuesta.objects.all().delete()
+            
+            return render(request, 'encuesta/excel_upload.html', {
+                'message': f'Se eliminaron exitosamente {count} encuestas de la base de datos.',
+                'message_type': 'success'
+            })
+        except Exception as e:
+            return render(request, 'encuesta/excel_upload.html', {
+                'error': f'Error al eliminar las encuestas: {str(e)}'
+            })

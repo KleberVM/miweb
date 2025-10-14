@@ -50,12 +50,16 @@
                     </ul>
                 </div>
 
-                <!-- Botón para descargar plantilla -->
+                <!-- Botones de acción -->
                 <div class="mb-4 text-center">
-                    <a href="{% url 'encuesta:download_excel' %}" class="btn btn-outline-primary btn-lg">
+                    <a href="{% url 'encuesta:download_excel' %}" class="btn btn-outline-primary btn-lg me-2">
                         <span class="material-icons" style="vertical-align: middle;">download</span>
                         Descargar Plantilla de Ejemplo
                     </a>
+                    <button type="button" class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <span class="material-icons" style="vertical-align: middle;">delete_forever</span>
+                        Borrar Todas las Encuestas
+                    </button>
                     <p class="text-muted mt-2 small">Descarga un archivo Excel con las columnas correctas y datos de ejemplo</p>
                 </div>
 
@@ -168,6 +172,42 @@
                 <span class="material-icons" style="vertical-align: middle;">arrow_back</span>
                 Volver al Inicio
             </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación para borrar -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <span class="material-icons" style="vertical-align: middle;">warning</span>
+                    Confirmar Eliminación
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    <strong><span class="material-icons" style="font-size: 20px; vertical-align: middle;">warning_amber</span> ¡ADVERTENCIA!</strong>
+                    <p class="mb-0 mt-2">Esta acción eliminará <strong>TODAS</strong> las encuestas de la base de datos de forma permanente.</p>
+                </div>
+                <p class="text-center mb-3">¿Estás seguro de que deseas continuar?</p>
+                <p class="text-center text-muted small">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <span class="material-icons" style="vertical-align: middle;">cancel</span>
+                    Cancelar
+                </button>
+                <form method="post" action="{% url 'encuesta:delete_all_encuestas' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">
+                        <span class="material-icons" style="vertical-align: middle;">delete_forever</span>
+                        Sí, Borrar Todo
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
