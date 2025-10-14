@@ -1,0 +1,30 @@
+{% extends 'encuesta/base.html' %}
+
+{% block title %}Encuesta Completada{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg">
+            <div class="card-header bg-success text-white text-center">
+                <h2>¡Gracias por completar la encuesta!</h2>
+            </div>
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                </div>
+                <p class="lead">Su participación es muy valiosa para nuestro estudio.</p>
+                <p>Sus respuestas han sido registradas correctamente en nuestro sistema.</p>
+                
+                <div class="alert alert-info mt-4">
+                    <p>Los resultados de este estudio serán utilizados para análisis estadísticos y ayudarán a comprender mejor los factores que influyen en las decisiones electorales.</p>
+                </div>
+                
+                <div class="d-grid gap-2 col-6 mx-auto mt-4">
+                    <a href="{% url 'encuesta:home' %}" class="btn btn-primary">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

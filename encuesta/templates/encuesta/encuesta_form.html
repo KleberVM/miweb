@@ -1,0 +1,385 @@
+{% extends 'encuesta/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Completar Encuesta{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow-lg mb-5">
+            <div class="card-header bg-primary text-white text-center">
+                <h2>Encuesta Electoral</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <!-- Sección 1: Datos Demográficos y Socioeconómicos -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h3>Sección 1: Datos Demográficos y Socioeconómicos</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_nombre" class="form-label">Nombre </label>
+                                    {{ form.nombre|add_class:"form-control" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_correo" class="form-label">Correo electrónico </label>
+                                    {{ form.correo|add_class:"form-control" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_edad" class="form-label">Rango de edad</label>
+                                    {{ form.edad|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_genero" class="form-label">Género</label>
+                                    {{ form.genero|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_ciudad" class="form-label">Departamento</label>
+                                    {{ form.ciudad|add_class:"form-select" }}
+                                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_localidad" class="form-label">Localidad</label>
+                                    {{ form.localidad|add_class:"form-control" }}
+                                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_situacion_educativa" class="form-label">Situación educativa</label>
+                                    {{ form.situacion_educativa|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_profesion_carrera" class="form-label">Profesión o carrera</label>
+                                    {{ form.profesion_carrera|add_class:"form-control" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_estrato_socioeconomico" class="form-label">Estrato socioeconómico</label>
+                                    {{ form.estrato_socioeconomico|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_estatus_laboral" class="form-label">Estatus laboral</label>
+                                    {{ form.estatus_laboral|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_contribuye_familia" class="form-label">¿Contribuye económicamente a su familia?</label>
+                                    {{ form.contribuye_familia|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_nivel_ingreso" class="form-label">Nivel de ingresos</label>
+                                    {{ form.nivel_ingreso|add_class:"form-select" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 2: Intención de voto y alineamiento ideológico -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h3>Sección 2: Intención de voto y alineamiento ideológico</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_intencion_voto" class="form-label">¿Por quién votaría si las elecciones fueran hoy?</label>
+                                    {{ form.intencion_voto|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_firmeza_voto" class="form-label">¿Qué tan firme es su decisión? (1-5)</label>
+                                    {{ form.firmeza_voto|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_alineamiento_ideologico" class="form-label">¿Con qué posición ideológica se identifica más?</label>
+                                    {{ form.alineamiento_ideologico|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_influencia_entorno" class="form-label">¿Qué tanto influye la opinión de su familia o amigos en su decisión de voto?(1-5)</label>
+                                    {{ form.influencia_entorno|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="id_motivacion_voto" class="form-label">¿Cuál es su principal motivación para votar?</label>
+                                    {{ form.motivacion_voto|add_class:"form-select" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 3: Factores de decisión -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h3>Sección 3: Factores de decisión</h3>
+                            <p class="text-white-50 mb-0">Indique la importancia de cada factor en su decisión de voto (1-5)</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_estabilidad" class="form-label">Estabilidad económica</label>
+                                    {{ form.estabilidad|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_empleo" class="form-label">Generación de empleo</label>
+                                    {{ form.empleo|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_deuda" class="form-label">Manejo de la deuda pública</label>
+                                    {{ form.deuda|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_calidad" class="form-label">Calidad educativa</label>
+                                    {{ form.calidad|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_becas" class="form-label">Becas y apoyo estudiantil</label>
+                                    {{ form.becas|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_corrupcion_justicia" class="form-label">Lucha contra la corrupción</label>
+                                    {{ form.corrupcion_justicia|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_salud" class="form-label">Sistema de salud</label>
+                                    {{ form.salud|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_seguridad_ciudadana" class="form-label">Seguridad ciudadana</label>
+                                    {{ form.seguridad_ciudadana|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_cambio_climatico" class="form-label">Cambio climático</label>
+                                    {{ form.cambio_climatico|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_temaGenero" class="form-label">Políticas de género</label>
+                                    {{ form.temaGenero|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_derechos_sociales" class="form-label">Derechos sociales</label>
+                                    {{ form.derechos_sociales|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_modelo_desarrollo" class="form-label">Modelo de desarrollo</label>
+                                    {{ form.modelo_desarrollo|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_PropuestaCandidatoNegativo" class="form-label">Si una propuesta de su candidato afectara negativamente las relaciones diplomáticas con un país vecino, ¿qué tan probable sería que usted mantenga su voto?</label>
+                                    {{ form.PropuestaCandidatoNegativo|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_descontentoCandidato" class="form-label">Si un país u organismo internacional importante mostrara su descontento con la posible elección de su candidato, ¿qué tan probable sería que usted mantenga su voto?</label>
+                                    {{ form.descontentoCandidato|add_class:"form-select" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 4: Percepción de candidatos y atributos -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h3>Sección 4: Percepción de candidatos y atributos</h3>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="mb-3">Rodrigo Paz Pereira (1-5)</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_experiencia_gestion_paz" class="form-label">Experiencia en gestión</label>
+                                    {{ form.experiencia_gestion_paz|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_honestidad_paz" class="form-label">Honestidad</label>
+                                    {{ form.honestidad_paz|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_capacidad_unir_paz" class="form-label">Capacidad de unir</label>
+                                    {{ form.capacidad_unir_paz|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_conexion_jovenes_paz" class="form-label">Conexión con jóvenes</label>
+                                    {{ form.conexion_jovenes_paz|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_liderazgo_paz" class="form-label">Liderazgo</label>
+                                    {{ form.liderazgo_paz|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_propuestas_claras_paz" class="form-label">Propuestas claras</label>
+                                    {{ form.propuestas_claras_paz|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <h4 class="mb-3 mt-4">Jorge Quiroga Ramírez (1-5)</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_experiencia_gestion_tuto" class="form-label">Experiencia en gestión</label>
+                                    {{ form.experiencia_gestion_tuto|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_honestidad_tuto" class="form-label">Honestidad</label>
+                                    {{ form.honestidad_tuto|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_capacidad_unir_tuto" class="form-label">Capacidad de unir</label>
+                                    {{ form.capacidad_unir_tuto|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_conexion_jovenes_tuto" class="form-label">Conexión con jóvenes</label>
+                                    {{ form.conexion_jovenes_tuto|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_liderazgo_tuto" class="form-label">Liderazgo</label>
+                                    {{ form.liderazgo_tuto|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_propuestas_claras_tuto" class="form-label">Propuestas claras</label>
+                                    {{ form.propuestas_claras_tuto|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3 mt-4">
+                                <div class="col-md-6">
+                                    <label for="id_medio_influencia" class="form-label">¿Cuál es el principal medio por el que recibe información política?</label>
+                                    {{ form.medio_influencia|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_confianza_redes" class="form-label">¿Cuánto confía en la información política que ve en redes sociales? (1-5)</label>
+                                    {{ form.confianza_redes|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_conocimiento_economico" class="form-label">¿ Es importate que los candidatos sepan de economia ?</label>
+                                    {{ form.conocimiento_economico|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_influencia_imagen" class="form-label">¿Qué tanto influye la imagen personal (forma de vestir, expresarse, o comportamiento en medios) en su percepción del candidato?(1-5)</label>
+                                    {{ form.influencia_imagen|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_cambio_opinion_debates" class="form-label">¿Ha cambiado su opinión después de debates?</label>
+                                    {{ form.cambio_opinion_debates|add_class:"form-select" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 5: Impacto emocional y percepción de futuro -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h3>Sección 5: Impacto emocional y percepción de futuro</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_optimismo_futuro" class="form-label">¿Qué tan optimista se siente sobre el futuro del país? (1-5)</label>
+                                    {{ form.optimismo_futuro|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_emocion_dominante" class="form-label">¿Qué emoción predomina al pensar en las elecciones?</label>
+                                    {{ form.emocion_dominante|add_class:"form-select" }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_percepcion_eficacia" class="form-label">¿Cree que su voto puede generar un cambio real?</label>
+                                    {{ form.percepcion_eficacia|add_class:"form-select" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 6: Escenarios hipotéticos de simulación -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h3>Sección 6: Escenarios hipotéticos</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="id_confianza_expertos" class="form-label">Si un candidato admitiera que dejaría las decisiones económicas a sus “expertos”, ¿qué percepción tendría?</label>
+                                    {{ form.confianza_expertos|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_reaccion_escandalo" class="form-label">Si se descubriera un escándalo de corrupción confirmado, ¿cuánto afectaría su voto? (1-5)</label>
+                                    {{ form.reaccion_escandalo|add_class:"form-select" }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_reaccion_bonos" class="form-label">Si un candidato propusiera aumentar los bonos sociales o crearía nuevos bonos, ¿cómo afectaría eso su intención de voto?</label>
+                                    {{ form.reaccion_bonos|add_class:"form-select" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Enviar Encuesta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Validación de formulario
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+    
+    // No longer needed as we're using select dropdowns instead of range inputs
+</script>
+{% endblock %}

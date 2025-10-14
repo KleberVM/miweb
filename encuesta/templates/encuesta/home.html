@@ -1,0 +1,34 @@
+{% extends 'encuesta/base.html' %}
+{% load static %}
+{% block title %}Inicio - Sistema de Encuestas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h2>Bienvenido al Sistema de Encuestas</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead text-center">Esta encuesta nos ayudará a recopilar información importante sobre preferencias electorales y factores de decisión.</p>
+                
+            
+                
+                <div class="alert alert-info">
+                    <p><strong>Instrucciones:</strong></p>
+                    <ul>
+                        <li>La encuesta está dividida en secciones temáticas</li>
+                        <li>Complete todas las preguntas en cada sección</li>
+                        <li>Sus respuestas son confidenciales</li>
+                        <li>El tiempo estimado para completar la encuesta es de 10-15 minutos</li>
+                    </ul>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <a href="{% url 'encuesta:crear' %}" class="btn btn-primary btn-lg">Comenzar Encuesta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

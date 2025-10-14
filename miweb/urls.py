@@ -1,5 +1,4 @@
-"""
-URL configuration for miweb project.
+"""URL configuration for miweb project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,8 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import RedirectView
+from encuesta import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('encuesta/', include('encuesta.urls')),
+    # Direct path to Excel export view instead of including all encuesta URLs
+    path('excel/', views.ExcelExportView.as_view(), name='excel_export'),
+    path('excel/download/', views.DownloadExcelView.as_view(), name='download_excel'),
+    path('', RedirectView.as_view(url='encuesta/', permanent=True)),
 ]
+
+# Add static file serving in development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

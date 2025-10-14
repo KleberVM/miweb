@@ -1,0 +1,71 @@
+{% extends 'encuesta/base.html' %}
+{% load static %}
+
+{% block title %}Exportar a Excel{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    
+    .card {
+        background-color: #1e1e1e;
+        border-color: #333;
+    }
+    
+    .card-header {
+        background-color: #2d2d2d;
+        border-color: #333;
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+    
+    footer {
+        background-color: #1e1e1e !important;
+        color: #e0e0e0 !important;
+    }
+    
+    header {
+        background-color: #1e1e1e !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg">
+            <div class="card-header bg-dark text-white text-center">
+                <h2>Exportar Datos de Encuestas a Excel</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead text-center">Desde aquí puede descargar todos los datos de las encuestas en formato Excel.</p>
+                
+                <div class="alert alert-info bg-dark text-white border-secondary">
+                    <p><strong>Información:</strong></p>
+                    <ul>
+                        <li>El archivo Excel contendrá todas las respuestas de las encuestas</li>
+                        <li>Las preguntas aparecerán como columnas</li>
+                        <li>Cada fila representa una encuesta completada</li>
+                        <li>El archivo se descargará automáticamente al hacer clic en el botón</li>
+                    </ul>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <a href="{% url 'encuesta:download_excel' %}" class="btn btn-primary btn-lg">Descargar Excel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
