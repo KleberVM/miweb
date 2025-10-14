@@ -1,0 +1,195 @@
+{% extends 'encuesta/base.html' %}
+{% load static %}
+
+{% block title %}Subir Encuestas desde Excel{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow-lg mb-4">
+            <div class="card-header bg-primary text-white text-center">
+                <h2><span class="material-icons" style="font-size: 32px; vertical-align: middle;">upload_file</span> Importar Encuestas desde Excel</h2>
+            </div>
+            <div class="card-body">
+                <!-- Mensajes de error o éxito -->
+                {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong><span class="material-icons" style="font-size: 20px; vertical-align: middle;">error</span> Error:</strong> {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+
+                {% if message %}
+                <div class="alert alert-{{ message_type }} alert-dismissible fade show" role="alert">
+                    <strong><span class="material-icons" style="font-size: 20px; vertical-align: middle;">
+                        {% if message_type == 'success' %}check_circle{% else %}warning{% endif %}
+                    </span> Resultado:</strong> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    
+                    {% if errors %}
+                    <hr>
+                    <p class="mb-2"><strong>Errores encontrados:</strong></p>
+                    <ul class="mb-0">
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- Instrucciones -->
+                <div class="alert alert-info">
+                    <h5><span class="material-icons" style="font-size: 20px; vertical-align: middle;">info</span> Instrucciones:</h5>
+                    <ul class="mb-0">
+                        <li>El archivo debe ser formato Excel (.xlsx o .xls)</li>
+                        <li>La <strong>primera fila</strong> debe contener los nombres de las columnas</li>
+                        <li>Los campos <strong>nombre</strong> y <strong>correo</strong> son opcionales (pueden estar vacíos)</li>
+                        <li>Todas las demás columnas son obligatorias</li>
+                        <li>Descarga la plantilla de ejemplo para ver el formato correcto</li>
+                    </ul>
+                </div>
+
+                <!-- Botón para descargar plantilla -->
+                <div class="mb-4 text-center">
+                    <a href="{% url 'encuesta:download_excel' %}" class="btn btn-outline-primary btn-lg">
+                        <span class="material-icons" style="vertical-align: middle;">download</span>
+                        Descargar Plantilla de Ejemplo
+                    </a>
+                    <p class="text-muted mt-2 small">Descarga un archivo Excel con las columnas correctas y datos de ejemplo</p>
+                </div>
+
+                <!-- Formulario de carga -->
+                <form method="post" action="{% url 'encuesta:process_excel_upload' %}" enctype="multipart/form-data" id="uploadForm">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="excel_file" class="form-label">
+                            <span class="material-icons" style="vertical-align: middle;">attach_file</span>
+                            Selecciona el archivo Excel
+                        </label>
+                        <input type="file" class="form-control form-control-lg" id="excel_file" name="excel_file" accept=".xlsx,.xls" required>
+                        <div class="form-text">Formatos permitidos: .xlsx, .xls</div>
+                    </div>
+
+                    <!-- Información del archivo seleccionado -->
+                    <div id="fileInfo" class="alert alert-secondary d-none mb-4">
+                        <strong><span class="material-icons" style="font-size: 18px; vertical-align: middle;">description</span> Archivo seleccionado:</strong>
+                        <span id="fileName"></span>
+                        <br>
+                        <strong>Tamaño:</strong> <span id="fileSize"></span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                            <span class="material-icons" style="vertical-align: middle;">cloud_upload</span>
+                            Subir y Procesar Excel
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Información adicional -->
+                <div class="mt-4">
+                    <h5 class="text-primary">
+                        <span class="material-icons" style="vertical-align: middle;">list_alt</span>
+                        Columnas Requeridas:
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="small">
+                                <li>nombre (opcional)</li>
+                                <li>correo (opcional)</li>
+                                <li>edad</li>
+                                <li>genero</li>
+                                <li>ciudad</li>
+                                <li>localidad</li>
+                                <li>situacion_educativa</li>
+                                <li>profesion_carrera</li>
+                                <li>estrato_socioeconomico</li>
+                                <li>estatus_laboral</li>
+                                <li>contribuye_familia</li>
+                                <li>nivel_ingreso</li>
+                                <li>intencion_voto</li>
+                                <li>firmeza_voto</li>
+                                <li>alineamiento_ideologico</li>
+                                <li>influencia_entorno</li>
+                                <li>motivacion_voto</li>
+                                <li>estabilidad</li>
+                                <li>empleo</li>
+                                <li>deuda</li>
+                                <li>calidad</li>
+                                <li>becas</li>
+                                <li>corrupcion_justicia</li>
+                                <li>salud</li>
+                                <li>seguridad_ciudadana</li>
+                                <li>cambio_climatico</li>
+                                <li>temaGenero</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="small">
+                                <li>derechos_sociales</li>
+                                <li>modelo_desarrollo</li>
+                                <li>PropuestaCandidatoNegativo</li>
+                                <li>descontentoCandidato</li>
+                                <li>experiencia_gestion_paz</li>
+                                <li>honestidad_paz</li>
+                                <li>capacidad_unir_paz</li>
+                                <li>conexion_jovenes_paz</li>
+                                <li>liderazgo_paz</li>
+                                <li>propuestas_claras_paz</li>
+                                <li>experiencia_gestion_tuto</li>
+                                <li>honestidad_tuto</li>
+                                <li>capacidad_unir_tuto</li>
+                                <li>conexion_jovenes_tuto</li>
+                                <li>liderazgo_tuto</li>
+                                <li>propuestas_claras_tuto</li>
+                                <li>medio_influencia</li>
+                                <li>confianza_redes</li>
+                                <li>conocimiento_economico</li>
+                                <li>influencia_imagen</li>
+                                <li>cambio_opinion_debates</li>
+                                <li>optimismo_futuro</li>
+                                <li>emocion_dominante</li>
+                                <li>percepcion_eficacia</li>
+                                <li>confianza_expertos</li>
+                                <li>reaccion_escandalo</li>
+                                <li>reaccion_bonos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para volver -->
+        <div class="text-center mb-4">
+            <a href="{% url 'encuesta:home' %}" class="btn btn-outline-secondary">
+                <span class="material-icons" style="vertical-align: middle;">arrow_back</span>
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mostrar información del archivo seleccionado
+    document.getElementById('excel_file').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
+            document.getElementById('fileInfo').classList.remove('d-none');
+        } else {
+            document.getElementById('fileInfo').classList.add('d-none');
+        }
+    });
+
+    // Mostrar indicador de carga al enviar
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Procesando...';
+    });
+</script>
+{% endblock %}
